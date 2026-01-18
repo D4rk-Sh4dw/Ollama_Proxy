@@ -80,3 +80,58 @@ npm start
 ## How it works
 
 The proxy intercepts streaming responses (NDJSON) from Ollama. It buffers the text chunks and strips out any content enclosed within `<think>` and `</think>` tags before forwarding the clean stream to the client. Non-streaming requests or other endpoints are forwarded transparently.
+
+---
+
+# Deutsche Anleitung
+
+Ein leichtgewichtiger Proxy für Ollama, der "Thinking"-Blöcke (`<think>...</think>`) aus Streaming-Antworten entfernt. Nützlich für Reasoning-Modelle (wie DeepSeek-R1), wenn der Client den Denkprozess nicht unterstützt oder nicht anzeigen soll.
+
+## Installation
+
+1.  **Repository klonen:**
+    ```bash
+    git clone https://github.com/D4rk-Sh4dw/Ollama_Proxy.git
+    cd Ollama_Proxy
+    ```
+
+2.  **Abhängigkeiten installieren:**
+    ```bash
+    npm install
+    ```
+
+## Nutzung
+
+1.  **Starten:**
+    ```bash
+    npm start
+    ```
+    Der Server läuft standardmäßig auf Port **3000**.
+
+2.  **Client konfigurieren:**
+    Ändere die Ollama-Basis-URL in deinem Client anstatt `http://localhost:11434` auf:
+    *   **URL:** `http://localhost:3000`
+
+## Als Service einrichten (Ubuntu/Linux)
+
+1.  **Service-Datei anpassen:**
+    Bearbeite `ollama-proxy.service` und prüfe die Pfade:
+    -   `WorkingDirectory`: Pfad zum geklonten Repo (z.B. `/opt/Ollama_Proxy`).
+    -   `ExecStart`: Pfad zu `npm` (nutze `which npm` um ihn zu finden).
+
+2.  **Kopieren:**
+    ```bash
+    sudo cp ollama-proxy.service /etc/systemd/system/
+    ```
+
+3.  **Aktivieren und Starten:**
+    ```bash
+    sudo systemctl daemon-reload
+    sudo systemctl enable ollama-proxy
+    sudo systemctl start ollama-proxy
+    ```
+
+4.  **Status prüfen:**
+    ```bash
+    sudo systemctl status ollama-proxy
+    ```
