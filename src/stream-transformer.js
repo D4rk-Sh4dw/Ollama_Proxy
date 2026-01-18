@@ -31,9 +31,11 @@ class OllamaFilterStream extends Transform {
                 if (json.response !== undefined) {
                     content = json.response;
                     fieldToUpdate = 'response';
+                    if (json.thinking) delete json.thinking;
                 } else if (json.message && json.message.content !== undefined) {
                     content = json.message.content;
                     fieldToUpdate = 'message.content';
+                    if (json.message.thinking) delete json.message.thinking;
                 }
 
                 if (fieldToUpdate) {
@@ -76,9 +78,11 @@ class OllamaFilterStream extends Transform {
                 if (json.response !== undefined) {
                     content = json.response;
                     fieldToUpdate = 'response';
+                    if (json.thinking) delete json.thinking;
                 } else if (json.message && json.message.content !== undefined) {
                     content = json.message.content;
                     fieldToUpdate = 'message.content';
+                    if (json.message.thinking) delete json.message.thinking;
                 }
 
                 if (fieldToUpdate) {
