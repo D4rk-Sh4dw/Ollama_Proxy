@@ -1,0 +1,18 @@
+[Unit]
+Description=Ollama Proxy (No-Think)
+After=network.target ollama.service
+
+[Service]
+type=simple
+User=root
+# Change this to the directory where you cloned the repo
+WorkingDirectory=/opt/Ollama_Proxy
+# Ensure node is in your path or use absolute path to node executable
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=3
+Environment=PORT=3000
+Environment=OLLAMA_URL=http://127.0.0.1:11434
+
+[Install]
+WantedBy=multi-user.target
